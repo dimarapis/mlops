@@ -2,6 +2,8 @@
 -e .
 
 # external requirements
+scikit-learn
+sklearn
 click
 #docutils>=0.10,<0.17
 Sphinx

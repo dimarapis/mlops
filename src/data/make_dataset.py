@@ -5,6 +5,11 @@ from pathlib import Path
 import click
 from dotenv import find_dotenv, load_dotenv
 
+import torch
+import wget
+from torch.utils.data import Dataset
+import numpy as np
+import os
 
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
@@ -15,6 +20,30 @@ def main(input_filepath, output_filepath):
     """
     logger = logging.getLogger(__name__)
     logger.info("making final data set from raw data")
+    
+    #corrupted_train dataset load
+    train_data = [ ]
+    for i in range(5):
+        train_data.append(np.load(os.path.join(input_filepath,f"train_{i}.npz"), allow_pickle=True))
+    train_images = torch.tensor(np.concatenate([t['images'] for t in train_data])).reshape(-1, 1, 28, 28)
+    train_targets = torch.tensor(np.concatenate([t['labels'] for t in train_data]))
+    
+    #correpted_test_dataset load 
+    test_data = np.load(os.path.join(input_filepath,"test.npz"), allow_pickle=True)
+    test_image = torch.tensor(test_data['images']).reshape(-1, 1, 28, 28)
+    test_targets = torch.tensor(test_data['labels'])
+    
+    #Normalize data
+    train_ = {'images': (train_images - train_images.mean())/train_images.std(), 'labels': train_targets}
+    test_ = {'images': (test_image - test_image.mean())/test_image.std(), 'labels': test_targets}
+    
+    #Prints to ensure normalization
+    #print(torch.min(train_['images']), torch.mean(train_['images']), torch.max(train_['images']), print(train_['images'].std()))
+    #print(torch.min(test_['images']), torch.mean(test_['images']), torch.max(test_['images']), print(test_['images'].std()))
+    
+    #Save as tensors
+    torch.save(train_, os.path.join(output_filepath, 'train.pt'))
+    torch.save(test_, os.path.join(output_filepath, 'test.pt'))
 
 
 if __name__ == "__main__":
