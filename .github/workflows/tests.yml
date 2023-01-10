@@ -43,7 +43,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
-    - name: Test with pytest
+    #- name: Test with pytest
+    #  run: |
+    #    pip install pytest
+    #    pytest -v
+    - name: Generate Report
       run: |
-        pip install pytest
-        pytest -v
+        pip install coverage
+        coverage run -m pytest tests/
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v2
