@@ -1,0 +1,4 @@
+# additional package
+-e .
+
+torch
