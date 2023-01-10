@@ -5,13 +5,14 @@ import pytest
 
 
 def test_data():
-    pytest.mark.skipif(not os.path.exists(os.path.join(_PATH_DATA,'processed','train.pt')), reason="Data files not found")
-    pytest.mark.skipif(not os.path.exists(os.path.join(_PATH_DATA,'processed','test.pt')), reason="Data files not found")
 
     print("Loading data")
-    train_data = torch.load(os.path.join(_PATH_DATA,'processed','train.pt'))
-    test_data = torch.load(os.path.join(_PATH_DATA,'processed','test.pt'))
-    
+    try:
+        train_data = torch.load(os.path.join(_PATH_DATA,'processed','train.pt'))
+        test_data = torch.load(os.path.join(_PATH_DATA,'processed','test.pt'))
+    except Exception as e:
+        pytest.skip("Data files not found")
+        
     #Testing length, shape and if all labels are represented in training set
     data = [train_data, test_data]
     label_list = []
