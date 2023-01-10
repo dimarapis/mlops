@@ -1,4 +1,4 @@
 # additional package
 -e .
 
-torch
+flake8
