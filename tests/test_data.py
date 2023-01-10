@@ -3,13 +3,11 @@ import torch
 from tests import _PATH_DATA
 import pytest
 
-pytest.mark.skipif(not os.path.exists(os.path.join(_PATH_DATA,'processed','train.pt')), reason="Data files not found")
-pytest.mark.skipif(not os.path.exists(os.path.join(_PATH_DATA,'processed','test.pt')), reason="Data files not found")
-
 
 def test_data():
-    #print(os.path.exists(os.path.join(_PATH_DATA,'processed','train2.pt')))
-    #Loading data
+    pytest.mark.skipif(not os.path.exists(os.path.join(_PATH_DATA,'processed','train.pt')), reason="Data files not found")
+    pytest.mark.skipif(not os.path.exists(os.path.join(_PATH_DATA,'processed','test.pt')), reason="Data files not found")
+
     print("Loading data")
     train_data = torch.load(os.path.join(_PATH_DATA,'processed','train.pt'))
     test_data = torch.load(os.path.join(_PATH_DATA,'processed','test.pt'))
@@ -29,4 +27,3 @@ def test_data():
                 label_list.append(labelpoint.item())
         assert sorted(label_list) == [0,1,2,3,4,5,6,7,8,9]
         
-#test_data()
