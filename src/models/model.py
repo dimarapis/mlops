@@ -13,22 +13,15 @@ class MyAwesomeModel(nn.Module):
         
         # Dropout module with 0.2 drop probability
         self.dropout = nn.Dropout(p=0.2)
-        self.dropout_switch = True
         
     def forward(self, x):
-        # make sure input tensor is flattened
         x = x.view(x.shape[0], -1)
-        
+        assert x.shape[1] == 784, 'Expected each sample to be flattened and MNIST data should have dimensions 28x28 = 784'
+                
         # Now with dropout
-        if self.dropout_switch:
-            x = self.dropout(F.relu(self.fc1(x)))
-            x = self.dropout(F.relu(self.fc2(x)))
-            x = self.dropout(F.relu(self.fc3(x)))
-        else:
-            x = F.relu(self.fc1(x))
-            #x = F.relu(self.fc12(x))
-            x = F.relu(self.fc2(x))
-            x = F.relu(self.fc3(x))
+        x = self.dropout(F.relu(self.fc1(x)))
+        x = self.dropout(F.relu(self.fc2(x)))
+        x = self.dropout(F.relu(self.fc3(x)))
 
         
         # output so no dropout here

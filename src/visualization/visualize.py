@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import tqdm
 import os
 import numpy as np
-#from sklearn.manifold import TSNE  
-#import sklearn.manifol as TSNE
+from sklearn.manifold import TSNE  
+#from sklearn.manifold._t_sne import TSNE
 
 def visualize(data_path, model_checkpoint, saving_path):
     
@@ -24,6 +24,9 @@ def visualize(data_path, model_checkpoint, saving_path):
     
     features = model.fc4.weight
     print(features.shape)
+    
+    	
+    tsne = TSNE(n_components=2).fit_transform(features)
 
 if __name__ == "__main__":
     visualize(data_path='data/processed', model_checkpoint='models/20230109_143851/checkpoint_0.01_0.5_full.pth', saving_path='reports/figures/')
