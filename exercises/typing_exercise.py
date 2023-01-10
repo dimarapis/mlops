@@ -1,20 +1,21 @@
 import torch
 import torch.nn.functional as F
 from torch import nn
-from typing import Callable, Optional, Tuple, Union, List 
+from typing import Callable, Optional, Tuple, Union, List
+
 
 class Network(nn.Module):
     def __init__(self, input_size: int, output_size: int, hidden_layers: List[int], drop_p: float = 0.5):
-        ''' Builds a feedforward network with arbitrary hidden layers.
+        """Builds a feedforward network with arbitrary hidden layers.
 
-            Arguments
-            ---------
-            input_size: integer, size of the input layer
-            output_size: integer, size of the output layer
-            hidden_layers: list of integers, the sizes of the hidden layers
-            drop_p: float, how much dropout to use in the network
+        Arguments
+        ---------
+        input_size: integer, size of the input layer
+        output_size: integer, size of the output layer
+        hidden_layers: list of integers, the sizes of the hidden layers
+        drop_p: float, how much dropout to use in the network
 
-        '''
+        """
         super().__init__()
         # Input to a hidden layer
         self.hidden_layers = nn.ModuleList([nn.Linear(input_size, hidden_layers[0])])
@@ -28,7 +29,7 @@ class Network(nn.Module):
         self.dropout = nn.Dropout(p=drop_p)
 
     def forward(self, x):
-        ''' Forward pass through the network, returns the output logits '''
+        """Forward pass through the network, returns the output logits"""
 
         for each in self.hidden_layers:
             x = F.relu(each(x))
@@ -48,11 +49,11 @@ def validation(model, testloader, criterion):
         output = model.forward(images)
         test_loss += criterion(output, labels).item()
 
-        ## Calculating the accuracy
+        # Calculating the accuracy
         # Model's output is log-softmax, take exponential to get the probabilities
         ps = torch.exp(output)
         # Class with highest probability is our predicted class, compare with true label
-        equality = (labels.data == ps.max(1)[1])
+        equality = labels.data == ps.max(1)[1]
         # Accuracy is number of correct predictions divided by all predictions, just take the mean
         accuracy += equality.type_as(torch.FloatTensor()).mean()
 
@@ -90,10 +91,12 @@ def train(model, trainloader, testloader, criterion, optimizer=None, epochs=5, p
                 with torch.no_grad():
                     test_loss, accuracy = validation(model, testloader, criterion)
 
-                print("Epoch: {}/{}.. ".format(e+1, epochs),
-                      "Training Loss: {:.3f}.. ".format(running_loss/print_every),
-                      "Test Loss: {:.3f}.. ".format(test_loss/len(testloader)),
-                      "Test Accuracy: {:.3f}".format(accuracy/len(testloader)))
+                print(
+                    "Epoch: {}/{}.. ".format(e + 1, epochs),
+                    "Training Loss: {:.3f}.. ".format(running_loss / print_every),
+                    "Test Loss: {:.3f}.. ".format(test_loss / len(testloader)),
+                    "Test Accuracy: {:.3f}".format(accuracy / len(testloader)),
+                )
 
                 running_loss = 0
 
