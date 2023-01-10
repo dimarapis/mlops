@@ -47,6 +47,14 @@ jobs:
     #  run: |
     #    pip install pytest
     #    pytest -v
+      
+    - name: Run isort
+      run: |
+        pip install isort
+        isort .
+
+    # --sp=pyproject.toml -c
+
     - name: Generate Report
       run: |
         pip install pytest

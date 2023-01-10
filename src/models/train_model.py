@@ -1,15 +1,14 @@
 import argparse
+import os
 import sys
-
-import torch
-import click
 import time
 
-from model import MyAwesomeModel
+import click
 import matplotlib.pyplot as plt
-import tqdm
-import os
 import numpy as np
+import torch
+import tqdm
+from model import MyAwesomeModel
 
 
 def train(data_path, lr):

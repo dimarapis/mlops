@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 import logging
+import os
 from pathlib import Path
 
 import click
-from dotenv import find_dotenv, load_dotenv
-
+import numpy as np
 import torch
 import wget
+from dotenv import find_dotenv, load_dotenv
 from torch.utils.data import Dataset
-import numpy as np
-import os
+
 
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))

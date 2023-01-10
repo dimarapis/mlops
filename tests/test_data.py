@@ -1,7 +1,9 @@
 import os
-import torch
-from tests import _PATH_DATA
+
 import pytest
+import torch
+
+from tests import _PATH_DATA
 
 
 def test_data():

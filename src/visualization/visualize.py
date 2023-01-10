@@ -1,16 +1,16 @@
 import argparse
+import os
 import sys
-
-import torch
-import click
 import time
-import sys
+
+import click
 # sys.path is a list of absolute path strings
 import matplotlib.pyplot as plt
-import tqdm
-import os
 import numpy as np
-from sklearn.manifold import TSNE  
+import torch
+import tqdm
+from sklearn.manifold import TSNE
+
 #from sklearn.manifold._t_sne import TSNE
 
 def visualize(data_path, model_checkpoint, saving_path):

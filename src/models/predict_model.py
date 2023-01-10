@@ -1,16 +1,16 @@
 
 import argparse
+import os
 import sys
-
-import torch
-import click
 import time
 
+import click
 #from model import MyAwesomeModel
 import matplotlib.pyplot as plt
-import tqdm
-import os
 import numpy as np
+import torch
+import tqdm
+
 
 def evaluate(data_path, model_checkpoint):
     
