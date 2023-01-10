@@ -23,7 +23,7 @@ def main(input_filepath, output_filepath):
 
     # corrupted_train dataset load
     train_data = []
-    for i in range(5):
+    for i in range(8):
         train_data.append(
             np.load(os.path.join(input_filepath, f"train_{i}.npz"), allow_pickle=True)
         )
