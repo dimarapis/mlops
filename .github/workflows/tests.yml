@@ -53,7 +53,20 @@ jobs:
         pip install isort
         isort .
 
+    - name: Run flake8
+      run: |
+        pip install flake8
+        flake8 .
     # --sp=pyproject.toml -c
+
+    - name: Run mypy on src/models/*
+      run: |
+        pip install mypy
+        mypy src/models/model.py 
+        mypy src/models/predict_model.py 
+        mypy src/models/train_model.py 
+
+
 
     - name: Generate Report
       run: |
