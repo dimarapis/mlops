@@ -8,7 +8,7 @@
 #sklearn
 #scipy==1.3.1
 click
-#docutils>=0.10,<0.17
+docutils>=0.10,<0.17
 Sphinx
 coverage
 awscli
