@@ -38,8 +38,8 @@ def main(input_filepath, output_filepath):
     test_ = {'images': (test_image - test_image.mean())/test_image.std(), 'labels': test_targets}
     
     #Prints to ensure normalization
-    #print(torch.min(train_['images']), torch.mean(train_['images']), torch.max(train_['images']), print(train_['images'].std()))
-    #print(torch.min(test_['images']), torch.mean(test_['images']), torch.max(test_['images']), print(test_['images'].std()))
+    print(torch.min(train_['images']), torch.mean(train_['images']), torch.max(train_['images']), print(train_['images'].std()))
+    print(torch.min(test_['images']), torch.mean(test_['images']), torch.max(test_['images']), print(test_['images'].std()))
     
     #Save as tensors
     torch.save(train_, os.path.join(output_filepath, 'train.pt'))
