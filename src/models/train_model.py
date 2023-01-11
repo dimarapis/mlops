@@ -26,9 +26,7 @@ def train(data_path, lr):
     criterion = torch.nn.NLLLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     gamma = 0.5
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(
-        optimizer, milestones=[30, 50, 70, 90], gamma=gamma
-    )
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[30, 50, 70, 90], gamma=gamma)
 
     epochs = 100
     loss_to_compare = np.inf
@@ -64,9 +62,7 @@ def train(data_path, lr):
         print(f"Epoch {e} --- train loss: {loss/len(train_set)}")
     model_folder = os.path.join("models", time.strftime("%Y%m%d_%H%M%S"))
     os.mkdir(model_folder)
-    torch.save(
-        model.state_dict(), os.path.join(model_folder, f"checkpoint_{lr}_{gamma}.pth")
-    )
+    torch.save(model.state_dict(), os.path.join(model_folder, f"checkpoint_{lr}_{gamma}.pth"))
     torch.save(model, os.path.join(model_folder, f"checkpoint_{lr}_{gamma}_full.pth"))
 
     plt.figure(figsize=(8, 4))
