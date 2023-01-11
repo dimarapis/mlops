@@ -1,4 +1,6 @@
 [core]
-    remote = storage
+    remote = remote_storage
 ['remote "storage"']
     url = gdrive://1jIvaJdwolgico4NIfhi6a7_S0u6nFUvt
+['remote "remote_storage"']
+    url = gs://dtu-mlops-20/
