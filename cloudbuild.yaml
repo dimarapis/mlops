@@ -1,5 +1,5 @@
 steps:
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['build', '-t', 'gcr.io/liquid-champion-374311/gcp_vm_tester', '.']
+     args: ['build', '-t', 'gcr.io/liquid-champion-374311/gpu_container', '.']
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['push', 'gcr.io/liquid-champion-374311/gcp_vm_tester']
+     args: ['push', 'gcr.io/liquid-champion-374311/gpu_container']
