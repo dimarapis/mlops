@@ -5,3 +5,4 @@ WORKDIR /
 COPY cuda_availability.py cuda_availability.py
 #RUN python cuda_availability.py
 ENTRYPOINT ["python", "-u", "cuda_availability.py"]
+
