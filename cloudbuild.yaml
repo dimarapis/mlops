@@ -3,3 +3,4 @@ steps:
      args: ['build', '-t', 'gcr.io/liquid-champion-374311/gpu_container', '.']
    - name: 'gcr.io/cloud-builders/docker'
      args: ['push', 'gcr.io/liquid-champion-374311/gpu_container']
+     
