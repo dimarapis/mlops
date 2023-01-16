@@ -21,14 +21,37 @@ def visualize(data_path, model_checkpoint, saving_path):
 
     print(model_checkpoint)
     test_set = torch.load(os.path.join(data_path, "test.pt"))
-
+    #print(test_set['images'].shape)
+    #images = torch.load(test_set['images'])
+    images = test_set['images'].float()#.squeeze().float()
     model = torch.load(model_checkpoint)
+    #print(images.shape)
+    #model = torch.load(model_checkpoint)
+    #print(model)
+    #model = torch.load(model_checkpoint)
 
-    features = model.fc4.weight
+    features = model(images)
     print(features.shape)
+    #current_outputs = outputs.cpu().detach().numpy()
+    #features = np.concatenate((outputs, current_outputs))
 
-    tsne = TSNE(n_components=2).fit_transform(features)
+    
+    #features = model.fc4
+    #print(features.shape)
 
+    #tsne = TSNE(n_components=2).fit_transform(features)
+    tsne = TSNE(n_components=2, verbose=1, random_state=123)
+
+    z = tsne.fit_transform(features.cpu().detach().numpy())
+
+    df = pd.DataFrame()
+    df["y"] = y_train
+    df["comp-1"] = z[:,0]
+    df["comp-2"] = z[:,1]
+
+    sns.scatterplot(x="comp-1", y="comp-2", hue=df.y.tolist(),
+                    palette=sns.color_palette("hls", 10),
+                    data=df).set(title="MNIST data T-SNE projection")
 
 if __name__ == "__main__":
     visualize(
