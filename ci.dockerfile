@@ -14,4 +14,6 @@ WORKDIR /mlops
 
 RUN pip install -r requirements.txt --no-cache-dir
 
-ENTRYPOINT ["scripts/trainer.sh"]
+RUN make data
+
+ENTRYPOINT ["python", "-u", "src/models/train_model.py"]
