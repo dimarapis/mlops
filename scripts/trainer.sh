@@ -1,2 +1,2 @@
 make data
-python -u src/models/train_data.py
+python -u src/models/train_model.py

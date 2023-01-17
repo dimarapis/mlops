@@ -42,7 +42,7 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip uninstall nvidia-cublas-cu11
 
 data:
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	yes | $(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 ## Train model
 train:
