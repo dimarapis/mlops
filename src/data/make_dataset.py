@@ -9,6 +9,8 @@ import torch
 import wget
 from dotenv import find_dotenv, load_dotenv
 from torch.utils.data import Dataset
+import zipfile
+from dvc.repo import Repo
 
 
 @click.command()
@@ -48,11 +50,35 @@ def main(input_filepath, output_filepath):
     torch.save(test_, os.path.join(output_filepath, "test.pt"))
 
 
+def extract_zip(input_filepath, output_filepath):
+    """Runs data processing scripts to turn raw data from (../raw) into
+    cleaned data ready to be analyzed (saved in ../processed).
+    """
+    with zipfile.ZipFile(input_filepath, "r") as zip_ref:
+        zip_ref.extractall(output_filepath)
+
+
+def dvc_pull():
+    repo = Repo(".")
+    repo.pull()
+
+
+def dvc_status():
+    repo = Repo(".")
+    return repo.status()
+
+
 if __name__ == "__main__":
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_fmt)
+    root = os.getcwd()
 
-    # not used in this stub but often useful for finding various files
+    if len(dvc_status()) != 0:
+        print("Data is not up to date, pulling data")
+        dvc_pull()
+    else:
+        print("Data is up to date")
+
     project_dir = Path(__file__).resolve().parents[2]
 
     # find .env automagically by walking up directories until it's found, then
