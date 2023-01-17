@@ -1,31 +1,20 @@
-import argparse
 import os
-import sys
-import time
-
-import click
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import tqdm
 from model import MyAwesomeModel
 
 
 def train(data_path, lr):
     print("Training day and night")
-    print(lr)
-
-    # train_set = CorruptMnist(train=True)
 
     model = MyAwesomeModel()
-    # train_set, _ = mnist()
-    # print(train_set.data.shape)
 
     train_set = torch.load(os.path.join(data_path, "train.pt"))
 
     criterion = torch.nn.NLLLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    gamma = 0.5
+    gamma = 0.1
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[30, 50, 70, 90], gamma=gamma)
 
     epochs = 100
@@ -33,6 +22,7 @@ def train(data_path, lr):
     early_stop_counter = 0
     running_losses = []
     for e in range(epochs):
+        # print(optimizer.param_groups[0]["lr"])
         model.train()
         running_loss = 0
         # print(len(train_set.targets))
@@ -60,16 +50,20 @@ def train(data_path, lr):
 
         running_losses.append(running_loss / len(train_set))
         print(f"Epoch {e} --- train loss: {loss/len(train_set)}")
-    model_folder = os.path.join("models", time.strftime("%Y%m%d_%H%M%S"))
-    os.mkdir(model_folder)
-    torch.save(model.state_dict(), os.path.join(model_folder, f"checkpoint_{lr}_{gamma}.pth"))
-    torch.save(model, os.path.join(model_folder, f"checkpoint_{lr}_{gamma}_full.pth"))
+    if os.path.exists("models"):
+        torch.save(model, "models/day2_best.pth")
+    else:
+        os.mkdir("models")
+        torch.save(model, "models/day2_best.pth")
 
     plt.figure(figsize=(8, 4))
     plt.plot(running_losses, label="training loss")
-    # plt.plot(test_losses, label='test')
     plt.legend()
-    plt.show()
+    if os.path.exists('reports/figures'):
+        plt.savefig("reports/figures/training_loss.png")
+    else: 
+        os.mkdir('reports/figures')
+        plt.savefig("reports/figures/training_loss.png")
 
 
 if __name__ == "__main__":

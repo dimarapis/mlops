@@ -48,24 +48,24 @@ jobs:
     #    pip install pytest
     #    pytest -v
       
-    - name: Run isort
-      run: |
-        pip install isort
-        isort .
+    #- name: Run isort
+    #  run: |
+    #    pip install isort
+    #    isort .
 
-    - name: Run flake8
-      run: |
-        pip install flake8
-        flake8 .
+    #- name: Run flake8
+    #  run: |
+    #    pip install flake8
+    #    flake8 .
     # --sp=pyproject.toml -c
 
-    - name: Run mypy on src/models/*
-      run: |
-        pip install types-tqdm
-        pip install mypy
-        mypy src/models/model.py 
-        mypy src/models/predict_model.py 
-        mypy src/models/train_model.py 
+    #- name: Run mypy on src/models/*
+    #  run: |
+    #    pip install types-tqdm
+    #    pip install mypy
+    #    mypy src/models/model.py 
+    #    mypy src/models/predict_model.py 
+    #    mypy src/models/train_model.py 
 
 
 

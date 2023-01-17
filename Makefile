@@ -7,7 +7,7 @@
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
-PROJECT_NAME = mlops
+PROJECT_NAME = dtu_mlops
 PYTHON_INTERPRETER = python3
 
 ifeq (,$(shell which conda))
@@ -16,25 +16,40 @@ else
 HAS_CONDA=True
 endif
 
-#################################################################################
-# COMMANDS                                                                      #
-#################################################################################
+## Set up python interpreter environment
+create_environment:
+ifeq (True,$(HAS_CONDA))
+		@echo ">>> Detected conda, creating conda environment."
+ifeq (3,$(findstring 3,$(PYTHON_INTERPRETER)))
+	conda create --name $(PROJECT_NAME) python=3.9
+else
+	conda create --name $(PROJECT_NAME) python=2.7
+endif
+		@echo ">>> New conda env created. Activate with:\nsource activate $(PROJECT_NAME)"
+else
+	$(PYTHON_INTERPRETER) -m pip install -q virtualenv virtualenvwrapper
+	@echo ">>> Installing virtualenvwrapper if not already installed.\nMake sure the following lines are in shell startup file\n\
+	export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource /usr/local/bin/virtualenvwrapper.sh\n"
+	@bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER)"
+	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
+endif
 
 ## Install Python Dependencies
 requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
+	$(PYTHON_INTERPRETER) -m pip install -U black isort flake8 pipreqs pre-commit
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-
-## Make Dataset
-data: requirements
+	$(PYTHON_INTERPRETER) -m pip uninstall nvidia-cublas-cu11
+	
+data: 
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 ## Train model
-train: requirements
+train: 
 	$(PYTHON_INTERPRETER) src/models/train_model.py
 
 ## Predict model
-predict: requirements
+predict: 
 	$(PYTHON_INTERPRETER) src/models/predict_model.py
 
 ## Visualize model layers
@@ -49,6 +64,8 @@ clean:
 ## Lint using flake8
 lint:
 	flake8 src
+	isort src
+
 
 ## Upload Data to S3
 sync_data_to_s3:

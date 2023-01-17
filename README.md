@@ -1,9 +1,103 @@
-dtu_mlops
+Repo developed for exercise section of course 02476 Machine Learning Operations
 ==============================
+# Updated January 2023 @ the Technical University of Denmark
+## Clone repo 
+```shell
+$ git clone https://github.com/dimarapis/mlops
+```
+## Installation
+Generate an environment for *conda* or *venv*:
+```shell
+$ make create_environment
+``` 
+After activating this environment, install the requirements:
+```shell
+$ make requirements
+```
+Ensure project is installed as package:
+```shell
+$ pip install e .
+```
 
-description
+## Exercises
+## Day 1:
+#### Build a simple model and a simple training loop
 
-Project Organization
+Train the model and visualize loss
+```shell
+$ python exercises/day_1/main.py train --lr 1e-2
+```
+See results: [Link to file](reports/figures/training_loss.png)
+
+Evaluate model until achieving >85% accuracy
+```shell
+$ python exercises/day_1/main.py evaluate models/day1_best.pth
+```
+## Day 2:
+#### Transform to cookiecutter format and run day1 exercises
+
+Prepare data (as tensors)
+```shell
+$ make data
+```
+
+Train the model and visualize loss
+```shell
+$ make train
+```
+
+Evaluate model until achieving >85% accuracy - not with makefile
+```shell
+$ python src/models/predict_model.py models/day2_best.pth data/processed/test.pt 
+```
+
+Visualize features
+```shell
+$ python src/visualization/visualize.py
+```
+See results [Link to file](reports/figures/visualize.png)
+
+Check that code is pep8 compliant
+```shell
+$ flake8 .
+```
+
+Fix errors with black and manually
+```shell
+$ black .
+```
+
+Fix typing exercise and test if type compliant
+```shell
+$ mypy exercises/typing_exercise.py
+```
+
+## Day 3:
+#### Build dockers and config files
+Training docker build
+```shell
+$ docker build -f trainer.dockerfile . -t trainer:latest
+```
+Run training in docker
+```shell
+$ docker run --name training trainer:latest
+```
+
+Create a config file with training parameters
+<br/>
+See: [Link to file](src/configs/config.yaml)
+
+## Day 9:
+### Distributed data loading
+
+Plot data loading process using different amount of threads.
+```shell
+python lfw_dataset.py -get_timing 
+``` 
+See results: [Link to file](reports/figures/num_workers_more_aug.png)
+
+
+Project Organization - from cookiecutter project
 ------------
 
     ├── LICENSE
@@ -46,8 +140,11 @@ Project Organization
     │   │   ├── predict_model.py
     │   │   └── train_model.py
     │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
+    │   ├── visualization  <- Scripts to create exploratory and results oriented visualizations
+    │   │    └── visualize.py
+    │   │
+    │   └── configs  <- Configuration files
+    │       └── config.yaml
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
@@ -56,13 +153,3 @@ Project Organization
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
-
-# Md files
-
-## Ddamm
-
-[dimarapis - Overview](https://github.com/dimarapis)
-
-![wtf.jpeg](reports/figures/wtf.jpeg)
-
-dasdasd
