@@ -10,12 +10,13 @@
 #coverage
 #awscli
 #python-dotenv>=0.5.1
-#torch
 
+docutils>=0.10,<0.17
 numpy
 matplotlib
 scipy
 seaborn
+torch
 torchvision
 huggingface
 pipreqs
@@ -38,3 +39,5 @@ pre-commit
 google-api-python-client
 ptflops
 click
+wget
+argparse

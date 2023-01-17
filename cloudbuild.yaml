@@ -1,5 +1,5 @@
 steps:
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['build', '-t', 'gcr.io/liquid-champion-374311/gpu_torch', '.']
+     args: ['build', '-t', 'gcr.io/liquid-champion-374311/vertex', '.']
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['push', 'gcr.io/liquid-champion-374311/gpu_torch']
+     args: ['push', 'gcr.io/liquid-champion-374311/vertex']

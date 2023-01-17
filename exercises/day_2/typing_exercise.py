@@ -28,7 +28,7 @@ class Network(nn.Module):
 
         self.dropout = nn.Dropout(p=drop_p)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass through the network, returns the output logits"""
 
         for each in self.hidden_layers:
@@ -39,13 +39,15 @@ class Network(nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-def validation(model, testloader, criterion):
+def validation(model: nn.Module, 
+    testloader: torch.utils.data.DataLoader, 
+    criterion: Union[Callable, nn.Module]
+    ) -> Tuple[float, float]:
+    
     accuracy = 0
     test_loss = 0
     for images, labels in testloader:
-
         images = images.resize_(images.size()[0], 784)
-
         output = model.forward(images)
         test_loss += criterion(output, labels).item()
 
@@ -60,7 +62,15 @@ def validation(model, testloader, criterion):
     return test_loss, accuracy
 
 
-def train(model, trainloader, testloader, criterion, optimizer=None, epochs=5, print_every=40):
+def train(model: nn.Module, 
+    trainloader: torch.utils.data.DataLoader, 
+    testloader: torch.utils.data.DataLoader, 
+    criterion: Union[Callable, nn.Module], 
+    optimizer: Optional[torch.optim.Optimizer] = None, 
+    epochs: int = 5, 
+    print_every: int = 40,
+    ) -> None:
+    
     if optimizer is None:
         optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
     steps = 0

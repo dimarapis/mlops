@@ -23,7 +23,7 @@ def main(input_filepath, output_filepath):
 
     # corrupted_train dataset load
     train_data = []
-    for i in range(8):
+    for i in range(5):
         train_data.append(np.load(os.path.join(input_filepath, f"train_{i}.npz"), allow_pickle=True))
     train_images = torch.tensor(np.concatenate([t["images"] for t in train_data])).reshape(-1, 1, 28, 28)
     train_targets = torch.tensor(np.concatenate([t["labels"] for t in train_data]))

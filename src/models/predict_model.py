@@ -1,41 +1,20 @@
-import argparse
-import os
-import sys
-import time
-
-import click
-
-# from model import MyAwesomeModel
-import matplotlib.pyplot as plt
-import numpy as np
 import torch
-import tqdm
+import argparse
 
 
 def evaluate(data_path, model_checkpoint):
 
     print("Evaluating until hitting the ceiling")
 
-    print(model_checkpoint)
-    # _, test_set = mnist()
-    test_set = torch.load(os.path.join(data_path, "test.pt"))
-
-    # print(len(test_set[0]))
-    # print(len(test_set[1]))
-
-    # .shape)
+    # print(model_checkpoint)
+    test_set = torch.load(data_path)
     model = torch.load(model_checkpoint)
-    # model = MyAwesomeModel()
-
     with torch.no_grad():
         model.eval()
-    # model.load_state_dict(torch.load(model_checkpoint))
 
     criterion = torch.nn.NLLLoss()
-
     test_losses = []
     test_loss = 0
-    # images,labels = test_set
     images = test_set["images"]
     labels = test_set["labels"]
     # for images, labels in test_set:
@@ -48,12 +27,14 @@ def evaluate(data_path, model_checkpoint):
     top_p, top_class = ps.topk(1, dim=1)
     equals = top_class == labels.view(*top_class.shape)
     accuracy = torch.mean(equals.type(torch.FloatTensor))
-    # print(test_loss)
     print(f"Accuracy: {accuracy.item()*100}%")
 
 
 if __name__ == "__main__":
-    evaluate(
-        data_path="data/processed",
-        model_checkpoint="models/20230109_143851/checkpoint_0.01_0.5_full.pth",
-    )
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("model_checkpoint", type=str, help="model_checkpoint")
+    parser.add_argument("data_path", type=str, help="location of test data")
+    res = parser.parse_args()
+
+    evaluate(data_path=res.data_path, model_checkpoint=res.model_checkpoint)
