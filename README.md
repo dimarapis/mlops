@@ -1,7 +1,7 @@
 Repo developed for exercise section of course 02476 Machine Learning Operations
 ==============================
 # Updated January 2023 @ the Technical University of Denmark
-## Clone repo 
+## Clone repo
 ```shell
 $ git clone https://github.com/dimarapis/mlops
 ```
@@ -9,7 +9,7 @@ $ git clone https://github.com/dimarapis/mlops
 Generate an environment for *conda* or *venv*:
 ```shell
 $ make create_environment
-``` 
+```
 After activating this environment, install the requirements:
 ```shell
 $ make requirements
@@ -48,7 +48,7 @@ $ make train
 
 Evaluate model until achieving >85% accuracy - not with makefile
 ```shell
-$ python src/models/predict_model.py models/day2_best.pth data/processed/test.pt 
+$ python src/models/predict_model.py models/day2_best.pth data/processed/test.pt
 ```
 
 Visualize features
@@ -92,8 +92,8 @@ See: [Link to file](src/configs/config.yaml)
 
 Plot data loading process using different amount of threads.
 ```shell
-python lfw_dataset.py -get_timing 
-``` 
+python lfw_dataset.py -get_timing
+```
 See results: [Link to file](reports/figures/num_workers_more_aug.png)
 
 
@@ -152,4 +152,3 @@ Project Organization - from cookiecutter project
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
-

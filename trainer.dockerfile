@@ -11,7 +11,7 @@ COPY data/ data/
 COPY setup.py setup.py
 
 RUN pip install -r requirements.txt --no-cache-dir
-#RUN pip uninstall -y nvidia-cublas-cu11 
+#RUN pip uninstall -y nvidia-cublas-cu11
 
 WORKDIR /
 

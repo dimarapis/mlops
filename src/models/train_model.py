@@ -59,10 +59,10 @@ def train(data_path, lr):
     plt.figure(figsize=(8, 4))
     plt.plot(running_losses, label="training loss")
     plt.legend()
-    if os.path.exists('reports/figures'):
+    if os.path.exists("reports/figures"):
         plt.savefig("reports/figures/training_loss.png")
-    else: 
-        os.mkdir('reports/figures')
+    else:
+        os.mkdir("reports/figures")
         plt.savefig("reports/figures/training_loss.png")
 
 

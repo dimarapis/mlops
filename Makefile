@@ -40,16 +40,16 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U black isort flake8 pipreqs pre-commit
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 	$(PYTHON_INTERPRETER) -m pip uninstall nvidia-cublas-cu11
-	
-data: 
+
+data:
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 ## Train model
-train: 
+train:
 	$(PYTHON_INTERPRETER) src/models/train_model.py
 
 ## Predict model
-predict: 
+predict:
 	$(PYTHON_INTERPRETER) src/models/predict_model.py
 
 ## Visualize model layers

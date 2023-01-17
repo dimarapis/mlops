@@ -4,7 +4,7 @@ model:
 
 data:
   location: data #Location of data folder
-  augmentation: null # Options 
+  augmentation: null # Options
   batch_size: 8
   input_size: 224
   classes: ['Coast', 'Desert', 'Forest', 'Glacier', 'Mountain']
@@ -26,7 +26,6 @@ training:
 reproducability:
   seed: 19 #19 for team19
 
-wandb: 
+wandb:
   project: landscapes
   entity: dtumlops-group19
-  

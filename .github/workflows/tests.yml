@@ -47,7 +47,7 @@ jobs:
     #  run: |
     #    pip install pytest
     #    pytest -v
-      
+
     #- name: Run isort
     #  run: |
     #    pip install isort
@@ -63,9 +63,9 @@ jobs:
     #  run: |
     #    pip install types-tqdm
     #    pip install mypy
-    #    mypy src/models/model.py 
-    #    mypy src/models/predict_model.py 
-    #    mypy src/models/train_model.py 
+    #    mypy src/models/model.py
+    #    mypy src/models/predict_model.py
+    #    mypy src/models/train_model.py
 
 
 
