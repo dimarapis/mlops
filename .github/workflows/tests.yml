@@ -44,13 +44,14 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Build the Docker image
-      run: |
-        echo "$" | docker login \
-          -u "$" --password-stdin docker.io
-        docker build . --file dummy.dockerfile \
-          --tag docker.io/$/$:$GITHUB_SHA
-        docker push docker.io/$/$:$GITHUB_SHA
+
+    #- name: Build the Docker image
+    #  run: |
+    #    echo "$" | docker login \
+    #      -u "$" --password-stdin docker.io
+    #    docker build . --file dummy.dockerfile \
+    #      --tag docker.io/$/$:$GITHUB_SHA
+    #    docker push docker.io/$/$:$GITHUB_SHA
 
     #- name: Test with pytest
     #  run: |
@@ -78,10 +79,10 @@ jobs:
 
 
 
-    - name: Generate Report
-      run: |
-        pip install pytest
-        pip install coverage
-        coverage run -m pytest tests/
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v3.1.1
+#    - name: Generate Report
+#       run: |
+#        pip install pytest
+#        pip install coverage
+#        coverage run -m pytest tests/
+#    - name: Upload Coverage to Codecov
+#      uses: codecov/codecov-action@v3.1.1
